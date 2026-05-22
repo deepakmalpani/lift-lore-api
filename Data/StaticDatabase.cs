@@ -1,7 +1,7 @@
-public class StaticDatabase
+public static class StaticDatabase
 {
-    public List<WorkoutPlan> workoutPlans {get; set;} = [];
-    public List<WorkoutDay> workoutDays {get; set;} = [];
-    public List<Exercise> exercises {get; set;} = [];
-    public List<WorkoutLog> workoutLogs {get; set;} = [];
+    public static List<WorkoutPlan> WorkoutPlans {get; set;} = new();
+    public static List<WorkoutDay> WorkoutDays {get; set;} = new();
+    public static List<Exercise> Exercises {get; set;} = new();
+    public static List<WorkoutLog> WorkoutLogs {get; set;} = new();
 }
