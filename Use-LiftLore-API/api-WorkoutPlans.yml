@@ -1,0 +1,22 @@
+info:
+  name: api/WorkoutPlans
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: https://localhost:7094/api/WorkoutPlans
+  body:
+    type: json
+    data: |-
+      {
+        "name" : "PPL",
+        "description" : "Push Pull Legs plan"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
