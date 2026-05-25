@@ -15,6 +15,18 @@ public class WorkoutPlansController : ControllerBase
             Description = workoutPlan.Description,
             CreatedAt = DateTime.UtcNow
         };
-        return CreatedAtAction(nameof(CreateWorkoutPlan), new {id = newWorkoutPlan.Id}, newWorkoutPlan);
+        StaticDatabase.WorkoutPlans.Add(newWorkoutPlan);
+        return CreatedAtAction(nameof(GetWorkoutPlanById), new {id = newWorkoutPlan.Id}, newWorkoutPlan);
+    }
+    [HttpGet("{id}")]
+    public IActionResult GetWorkoutPlanById(int id)
+    {
+        var plan = StaticDatabase.WorkoutPlans.FirstOrDefault(p => p.Id == id);
+
+        if(plan == null)
+        {
+            return NotFound();
+        }
+        return Ok(plan);
     }
 }
