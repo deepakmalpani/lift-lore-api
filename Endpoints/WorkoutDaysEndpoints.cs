@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 public static class WorkoutDaysEndpoints
 {
     public static void RegisterWorkoutDaysEndpoints(this WebApplication app)
     {
-        app.MapGet("/{planId}/days", async (int planId, [FromBody] List<CreateWorkoutDay> workoutDays) =>
+        app.MapPost("/{planId}/days", async (int planId, [FromBody] List<CreateWorkoutDay> workoutDays) =>
         {
             if (workoutDays == null || !workoutDays.Any())
         {
@@ -13,7 +15,7 @@ public static class WorkoutDaysEndpoints
         var parentWorkoutPlan = StaticDatabase.WorkoutPlans.FirstOrDefault(m => m.Id == planId);
         if (parentWorkoutPlan == null)
         {
-            return NotFound($"Plan with ID {planId} does not exist");
+            return Results.NotFound($"Plan with ID {planId} does not exist");
         }
         int nextId = StaticDatabase.WorkoutDays.Any() ?
                         StaticDatabase.WorkoutDays.Max(m => m.Id) + 1 :
@@ -32,7 +34,7 @@ public static class WorkoutDaysEndpoints
             newWorkoutDayList.Add(newWorkoutDay);
         }
         StaticDatabase.WorkoutDays.AddRange(newWorkoutDayList);
-        return CreatedAtAction(nameof(CreateWorkoutDay), new { planId = planId }, newWorkoutDayList);
+        return Results.Created($"/{planId}/days", newWorkoutDayList);
         });
     }
 }
